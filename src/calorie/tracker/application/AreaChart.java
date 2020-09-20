@@ -14,12 +14,10 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.AreaRendererEndType;
 import org.jfree.chart.renderer.category.AreaRenderer;
 import org.jfree.chart.title.TextTitle;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.general.DatasetUtils;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -30,7 +28,7 @@ public class AreaChart extends JFrame{
         initUI(current);
     }
     public void initUI(User current) {
-        CategoryDataset dataset = createDataset(current);
+        DefaultCategoryDataset dataset = createDataset(current);
         JFreeChart chart = createChart(dataset);
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
@@ -42,37 +40,25 @@ public class AreaChart extends JFrame{
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
-    private static CategoryDataset createDataset(User current) {
+    private static DefaultCategoryDataset createDataset(User current) {
         
-        double[][] data = new double[current.getJournals().size()][current.getJournals().size()];
-        String Date[] = new String[currentUser.getJournals().size()];
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         
         for (int i = 0; i < currentUser.getJournals().size(); i++) {
-            data[i][i] = current.getJournals().elementAt(i).getTotalCalories();
-            Date[i] = current.getJournals().elementAt(i).getDate() + " " + i;
+            dataset.addValue(current.getJournals().elementAt(i).getTotalCalories(), "Calories", current.getJournals().elementAt(i).getDate() + " " + i);
         } 
-        
-        CategoryDataset dataset = DatasetUtils.createCategoryDataset(
-                new String[]{"Calories"}, Date,
-                data
-        );
         
         return dataset;
     }
     
-    private static JFreeChart createChart(CategoryDataset dataset) {
+    private static JFreeChart createChart(DefaultCategoryDataset dataset) {
         JFreeChart chart = ChartFactory.createAreaChart (
                 "Total Logged Calories",
                 "Date",
                 "Estimated Calories",
-                dataset,
-                PlotOrientation.VERTICAL,
-                false,
-                true,
-                true
+                dataset
         );
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         plot.setForegroundAlpha(0.3f);
