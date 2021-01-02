@@ -22,8 +22,7 @@ public class CalorieFrame extends JFrame {
                 if(option == JOptionPane.YES_OPTION) {
                     JFileChooser saveChooser = new JFileChooser();
                     int value = saveChooser.showSaveDialog(null);  
-                    File file = saveChooser.getSelectedFile();
-                    
+                    File file = saveChooser.getSelectedFile(); 
                 }
                 System.exit(0);
         }

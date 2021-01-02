@@ -154,4 +154,25 @@ public class CalorieTrackerApplication {
     }
     
     
+    /* Method allowing users to write transactions to a file */
+    public static void save(File getFile) {
+        try {
+            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(getFile));    
+            output.writeObject(currentJournal);   
+            output.close();
+        }
+        catch (StreamCorruptedException stce) {
+            System.err.println("Unable to write into file. \n"
+            + "Please write into a a text file. \n");
+            JOptionPane.showMessageDialog(null, "Unable to write into file since it is not a text file. Try again!");
+        }
+        catch(FileNotFoundException fnfe) {
+            JOptionPane.showMessageDialog(null, "Unknown file selected");
+            System.err.println("Illegal buffer size has been entered. (file not found in console)");
+        }
+        catch(IOException ex) {
+            ex.printStackTrace(System.err);
+            System.err.println("User doesn't have permission to write into file / no space to write");
+        }
+    }
 }

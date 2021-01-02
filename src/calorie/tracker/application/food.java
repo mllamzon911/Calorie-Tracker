@@ -16,10 +16,10 @@ public class food {
         this.fats = fats;
         this.amount = 1;
     }
-    
-    public String getName() { return item; }
-     
+
     /* Below are functions that will return the nutrients of said food item */
+
+    public String getName() { return item; }
     
     public double getCalories() { return calories; }
     
