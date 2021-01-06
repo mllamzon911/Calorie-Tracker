@@ -12,11 +12,18 @@ import javax.swing.JTextArea;
 import java.awt.Font;
 import java.util.Vector;
 
+import java.io.File;
+import java.io.ObjectOutputStream;
+import java.io.FileOutputStream;
+
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Font;
+
+/* Exception Handling */
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.StreamCorruptedException;
 
 /* JFreeChart Library Imports */
 import org.jfree.chart.ChartFactory;
