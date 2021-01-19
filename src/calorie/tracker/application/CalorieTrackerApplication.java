@@ -161,7 +161,7 @@ public class CalorieTrackerApplication {
     }
     
     
-    /* Method allowing users to write transactions to a file */
+    /* Method allowing users to save journal logs to a file */
     public static void save(File getFile) {
         try {
             ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(getFile));    
