@@ -8,22 +8,22 @@ import java.awt.Dimension;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JFileChooser;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import java.io.File;
 
 /**
  *
  * @author Marvin Llamzon
  */
-public class CalorieOptionsPanel extends CalorieFrame {
+public class CalorieOptionsPanel extends CalorieJFrame {
     private static final int HEIGHT = 400, WIDTH = 800;
     
     private JMenuBar navigationBar;
-
-    private JMenu file_menu;
+    
+     private JMenu file_menu;
         private static JFileChooser readChooser, saveChooser;
         private JMenuItem readFile, saveFile;
     private JMenu account;
@@ -31,7 +31,7 @@ public class CalorieOptionsPanel extends CalorieFrame {
     private JMenu journal;
         private JMenuItem displayJournal, displayAll;
     private JMenu plotting;
-        private JMenuItem plotUser;
+        private JMenuItem plotArea, plotBar;
     
     public CalorieOptionsPanel(String title) {
         super(title);
@@ -43,10 +43,10 @@ public class CalorieOptionsPanel extends CalorieFrame {
         saveFile = new JMenuItem("Save");
         saveChooser = new JFileChooser();
         saveChooser.setDialogTitle("Save");
-
+        
         file_menu.add(readFile);
         file_menu.add(saveFile);
-
+        
         account = new JMenu("User Navigation");
         addAccount = new JMenuItem("Create an account");
         addJournal = new JMenuItem("Create a new journal log");
@@ -64,15 +64,17 @@ public class CalorieOptionsPanel extends CalorieFrame {
         journal.add(displayAll);
         
         plotting = new JMenu("Plot Navigation");
-        plotUser = new JMenuItem("Plot journals");
+        plotArea = new JMenuItem("Plot area chart");
+        plotBar = new JMenuItem("Plot bar graph");
         
-        plotting.add(plotUser);
-
+        plotting.add(plotArea);
+        plotting.add(plotBar);
+        
         MenuOptionsListener ml = new MenuOptionsListener();
         
         readFile.addActionListener(ml);
         saveFile.addActionListener(ml);
-
+        
         addAccount.addActionListener(ml);
         addJournal.addActionListener(ml);
         addFood.addActionListener(ml);
@@ -80,8 +82,10 @@ public class CalorieOptionsPanel extends CalorieFrame {
         displayJournal.addActionListener(ml);
         displayAll.addActionListener(ml);
         
-        plotUser.addActionListener(ml);
+        plotArea.addActionListener(ml);
+        plotBar.addActionListener(ml);
         
+        navigationBar.add(file_menu);
         navigationBar.add(account);
         navigationBar.add(journal);
         navigationBar.add(plotting);
@@ -110,10 +114,14 @@ public class CalorieOptionsPanel extends CalorieFrame {
                 case "List all journals":
                     CalorieTrackerApplication.displayAllJournals();
                     break;
-                case "Plot journals":
-                    CalorieTrackerApplication.plotUser();
+                case "Plot area chart":
+                    CalorieTrackerApplication.plotArea();
+                    break;
+                case "Plot bar graph":
+                    CalorieTrackerApplication.plotBar();
                     break;
                 case "Save":
+                int val = saveChooser.showSaveDialog(CalorieOptionsPanel.this);
                     try {
                         File file = saveChooser.getSelectedFile();
                         CalorieTrackerApplication.save(file);

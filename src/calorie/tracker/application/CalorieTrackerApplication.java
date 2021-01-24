@@ -4,39 +4,23 @@
  * and open the template in the editor.
  */
 package calorie.tracker.application;
-import java.awt.Color;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.util.Date; 
 import javax.swing.JTextArea;
-import java.awt.Font;
-import java.util.Vector;
 
 import java.io.File;
 import java.io.ObjectOutputStream;
 import java.io.FileOutputStream;
 
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
 import java.awt.EventQueue;
+import java.awt.Font;
 
 /* Exception Handling */
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StreamCorruptedException;
-
-/* JFreeChart Library Imports */
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.renderer.AreaRendererEndType;
-import org.jfree.chart.renderer.category.AreaRenderer;
-import org.jfree.chart.title.TextTitle;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.general.DatasetUtils;
-
 
 /**
  *
@@ -44,8 +28,7 @@ import org.jfree.data.general.DatasetUtils;
  */
 public class CalorieTrackerApplication {
     /* Frame Application Variables */
-    private static CalorieFrame frame;
-    private static JFrame graph;
+    private static CalorieJFrame frame;
     private static JTextArea text;
     /* Global Variables to keep track of current user */
     public static User currentUser; 
@@ -53,7 +36,7 @@ public class CalorieTrackerApplication {
     
     public static void main(String[] args) {
         frame = new CalorieOptionsPanel("Calorie Tracker");
-        text = new JTextArea(10,50);
+        text = new JTextArea(20,80);
         text.setFont(new Font("Monospaced",Font.PLAIN, 16));
         
         frame.getContentPane().add(text);
@@ -152,16 +135,20 @@ public class CalorieTrackerApplication {
     }
     
     /* Plot calories onto a graph based off of user's journal entries */
-    public static void plotUser() {
+    public static void plotArea() {
         EventQueue.invokeLater(() -> {
-
             var graph = new AreaChart(currentUser);            
             graph.setVisible(true);
         });
     }
     
+    public static void plotBar() {
+        EventQueue.invokeLater(() -> {
+            var graph = new BarChart(currentUser);            
+            graph.setVisible(true);
+        });
+    }
     
-    /* Method allowing users to save journal logs to a file */
     public static void save(File getFile) {
         try {
             ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(getFile));    
